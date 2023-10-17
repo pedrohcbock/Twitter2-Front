@@ -14,6 +14,12 @@ function UserProfile() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if(!localStorage.getItem("token")){
+            navigate("/")
+        }
+    }, [])
+
+    useEffect(() => {
         api.get('/user/${userId}')
             .then((response) => {
                 setUserData(response.data);

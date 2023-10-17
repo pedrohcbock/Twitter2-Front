@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../api/api";
 import { useNavigate, Link } from "react-router-dom";
 import "./CreatePost.css"
@@ -11,6 +11,12 @@ const CreatePost = ({ userId }) => {
     const [titleError, setTitleError] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!localStorage.getItem("token")) {
+            navigate("/")
+        }
+    }, [])
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);

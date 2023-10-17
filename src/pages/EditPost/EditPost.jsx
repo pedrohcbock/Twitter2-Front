@@ -12,6 +12,12 @@ const EditPost = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if(!localStorage.getItem("token")){
+            navigate("/")
+        }
+    }, [])
+
+    useEffect(() => {
         api.get('/post/${postId}')
             .then((response) => {
                 const post = response.data.post;

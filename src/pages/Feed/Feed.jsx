@@ -3,10 +3,18 @@ import api from "../../api/api";
 import "./Feed.css";
 import Header from "../../components/Header/Header";
 import LikeButton from "../../components/LikeButton/LikeButton";
+import { useNavigate } from 'react-router-dom';
 
 const Feed = () => {
     const [posts, setPosts] = useState([]);
     const [users, setUsers] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(!localStorage.getItem("token")){
+            navigate("/")
+        }
+    }, [])
 
     useEffect(() => {
         api.get('/user/show')

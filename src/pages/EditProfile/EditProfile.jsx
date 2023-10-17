@@ -18,6 +18,12 @@ const EditProfile = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
+        if(!localStorage.getItem("token")){
+            navigate("/")
+        }
+    }, [])
+
+    useEffect(() => {
         api.get('/user/update/${userId}')
             .then((response) => {
                 const userData = response.data;
