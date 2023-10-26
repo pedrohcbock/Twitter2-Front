@@ -12,31 +12,28 @@ const EditProfile = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const [biography, setBiography] = useState('');
     const [profile_pic, setProfile_pic] = useState(null);
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if(!localStorage.getItem("token")){
+        if (!localStorage.getItem("token")) {
             navigate("/")
         }
-    }, [])
 
-    useEffect(() => {
-        api.get('/user/update/${userId}')
-            .then((response) => {
-                const userData = response.data;
-                setName(userData.name);
-                setEmail(userData.email);
-                setUsername(userData.username);
-                setBiography(userData.biography);
-            })
-            .catch((error) => {
-                console.error('Erro ao buscar informações do usuário:', error);
-                setError("Erro ao buscar os dados do usuário. Tente novamente mais tarde.");
-            });
-    }, [userId]);
+        const user_id = localStorage.getItem("user_id")
+
+        api.get(`/user/userData/${user_id}`).then((response) => {
+            console.log(response)
+            setName(response.data.user.name)
+            setEmail(response.data.user.email)
+            setUsername(response.data.user.username)
+            setBiography(response.data.user.biography)
+        }).catch(err => {
+            console.log(err)
+        })
+
+    }, []);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -46,14 +43,15 @@ const EditProfile = () => {
             formData.append('name', name);
             formData.append('email', email);
             formData.append('username', username);
-            formData.append('password', password);
             formData.append('biography', biography);
 
             if (profile_pic) {
                 formData.append('profile_pic', profile_pic);
             }
 
-            const response = await api.put('/users/update/${userId}', formData, {
+            const user_id = localStorage.getItem("user_id")
+
+            const response = await api.put(`/users/update/${user_id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -62,7 +60,7 @@ const EditProfile = () => {
             console.log(response.data);
 
             setError('');
-            navigate('/profile/${userId}');
+            navigate(`/profile/${user_id}`);
 
         } catch (error) {
             console.error('Erro ao atualizar o perfil:', error);
@@ -107,17 +105,6 @@ const EditProfile = () => {
                             value={username}
                             placeholder='Digite o usuário'
                             onChange={(e) => setUsername(e.target.value)}
-                            className="form-input"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Senha:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            placeholder='Digite a senha'
-                            onChange={(e) => setPassword(e.target.value)}
                             className="form-input"
                         />
                     </div>

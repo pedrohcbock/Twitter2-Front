@@ -45,8 +45,7 @@ const Login = () => {
             const token = response.data.authorization.token;
 
             localStorage.setItem('token', token);
-
-            console.log(response.data);
+            localStorage.setItem("user_id", response.data.user.id)
 
             navigate('/feed');
         } catch (error) {

@@ -8,25 +8,36 @@ import DeletePostButton from "../../components/DeletePostButton/DeletePostButton
 
 
 function UserProfile() {
-    const { userId } = useParams();
-    const [userData, setUserData] = useState({});
     const [userPosts, setUserPosts] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if(!localStorage.getItem("token")){
-            navigate("/")
-        }
-    }, [])
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [biography, setBiography] = useState('');
+    const [profile_pic, setProfile_pic] = useState(null);
 
     useEffect(() => {
-        api.get('/user/${userId}')
-            .then((response) => {
-                setUserData(response.data);
-            })
-            .catch((error) => {
-                console.error('Erro ao buscar informações do usuário:', error);
-            });
+        if (!localStorage.getItem("token")) {
+            navigate("/")
+        }
+        api.get(`/user/userData/${user_id}`).then((response) => {
+            console.log(response)
+            setName(response.data.user.name)
+            setEmail(response.data.user.email)
+            setUsername(response.data.user.username)
+            setBiography(response.data.user.biography)
+            setProfile_pic(response.data.user.profile_pic)
+        }).catch(err => {
+            console.log(err)
+        })
+
+    }, [])
+
+    const user_id = localStorage.getItem("user_id")
+
+    useEffect(() => {
+        
 
         api.get('/post/showMy')
             .then((response) => {
@@ -35,7 +46,7 @@ function UserProfile() {
             .catch((error) => {
                 console.error('Erro ao buscar postagens do usuário:', error);
             });
-    }, [userId]);
+    }, [user_id]);
 
     return (
         <div>
@@ -44,12 +55,12 @@ function UserProfile() {
             <div className="user-profile-container">
                 <div className="user-profile-left">
                     <div className="user-profile-pic">
-                        <img src={userData.profilePic} alt="Foto de Perfil" />
+                        <img src={profile_pic} alt="Foto de Perfil" />
                     </div>
                     <div className="user-profile-info">
-                        <h2>{userData.username}</h2>
-                        <p>{userData.biography}</p>
-                        <p>Nome Real: {userData.name}</p>
+                        <h2>{username}</h2>
+                        <p>{biography}</p>
+                        <p>Nome Real: {name}</p>
                     </div>
                     <button onClick={() => navigate('/editprofile')}>Editar perfil</button>
                     <br />

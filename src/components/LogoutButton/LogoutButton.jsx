@@ -9,7 +9,8 @@ const LogoutButton = () => {
     const handleLogout = async () => {
         try {
             await api.post("/logout");
-
+            localStorage.removeItem("user_id")
+            localStorage.removeItem("token")
             navigate("/");
         } catch (error) {
             console.error("Erro ao fazer logout:", error);
