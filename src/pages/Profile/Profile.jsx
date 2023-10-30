@@ -28,6 +28,7 @@ function UserProfile() {
             setUsername(response.data.user.username)
             setBiography(response.data.user.biography)
             setProfile_pic(response.data.user.profile_pic)
+            setPost
         }).catch(err => {
             console.log(err)
         })

@@ -48,6 +48,7 @@ const Login = () => {
             localStorage.setItem("user_id", response.data.user.id)
 
             navigate('/feed');
+            window.location.reload();
         } catch (error) {
             console.error('Erro ao fazer login', error);
             setError(error.response.data.message);

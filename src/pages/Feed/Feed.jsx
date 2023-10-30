@@ -11,7 +11,7 @@ const Feed = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(!localStorage.getItem("token")){
+        if (!localStorage.getItem("token")) {
             navigate("/")
         }
     }, [])
@@ -30,7 +30,7 @@ const Feed = () => {
                 setPosts(response.data[0]);
             })
             .catch((error) => {
-                console.log('Erro ao buscar postagens', error);
+                console.log('Erro ao buscar postagens', error); w
             });
     }, []);
 
@@ -54,7 +54,7 @@ const Feed = () => {
                             <div className="post-content">
                                 <h1 className="post-title">{post.title}</h1>
                                 <p>{post.content}</p>
-                                <LikeButton />
+                                <LikeButton postId={post.id} />
                             </div>
                         </li>
                     ))}
