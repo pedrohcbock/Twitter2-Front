@@ -54,7 +54,7 @@ const Feed = () => {
                             <div className="post-content">
                                 <h1 className="post-title">{post.title}</h1>
                                 <p>{post.content}</p>
-                                <LikeButton postId={post.id} />
+                                <LikeButton postId={post.id} isLiked={post.isLiked} />
                             </div>
                         </li>
                     ))}

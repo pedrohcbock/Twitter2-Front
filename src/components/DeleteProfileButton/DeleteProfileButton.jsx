@@ -8,8 +8,8 @@ const DeleteProfileButton = () => {
 
     const handleDeleteUser = async () => {
         try {
-            await api.delete('/user/delete/{user}');
-
+            const user_id = localStorage.getItem("user_id");
+            await api.delete(`/user/delete/${user_id}`);
             navigate('/');
         } catch (error) {
             console.error('Erro ao excluir o usuário:', error);

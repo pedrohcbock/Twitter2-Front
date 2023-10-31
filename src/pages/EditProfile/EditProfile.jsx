@@ -51,7 +51,7 @@ const EditProfile = () => {
 
             const user_id = localStorage.getItem("user_id")
 
-            const response = await api.put(`/users/update/${user_id}`, formData, {
+            const response = await api.post(`/user/update/${user_id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -60,7 +60,7 @@ const EditProfile = () => {
             console.log(response.data);
 
             setError('');
-            navigate(`/profile/${user_id}`);
+            navigate(`/profile`);
 
         } catch (error) {
             console.error('Erro ao atualizar o perfil:', error);

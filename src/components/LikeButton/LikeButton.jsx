@@ -8,11 +8,10 @@ const LikeButton = ({ postId, isLiked }) => {
   const handleLike = async () => {
     try {
       if (!liked) {
-        await api.post(`/like/${postId}`);
+        await api.post(`post/like/${postId}`);
       } else {
-        await api.post(`/unlike/${postId}`);
+        await api.post(`post/unlike/${postId}`);
       }
-      console.log(AAAAAAAAAA)
       setLiked(!liked);
     } catch (error) {
       console.error('Erro ao interagir com o post:', error);

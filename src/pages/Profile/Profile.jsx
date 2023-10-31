@@ -28,7 +28,6 @@ function UserProfile() {
             setUsername(response.data.user.username)
             setBiography(response.data.user.biography)
             setProfile_pic(response.data.user.profile_pic)
-            setPost
         }).catch(err => {
             console.log(err)
         })
@@ -38,7 +37,7 @@ function UserProfile() {
     const user_id = localStorage.getItem("user_id")
 
     useEffect(() => {
-        
+
 
         api.get('/post/showMy')
             .then((response) => {
@@ -65,7 +64,7 @@ function UserProfile() {
                     </div>
                     <button onClick={() => navigate('/editprofile')}>Editar perfil</button>
                     <br />
-                    <DeleteProfileButton />
+                    <DeleteProfileButton user_id={user_id} />
                 </div>
 
                 <div className="user-profile-right">
@@ -75,9 +74,9 @@ function UserProfile() {
                             <li key={post.id}>
                                 <h2>{post.title}</h2>
                                 <p>{post.content}</p>
-                                <button onClick={() => navigate('/editpost')}>Editar postagem</button>
+                                <button onClick={() => navigate(`/editpost/${post.id}`)}>Editar postagem</button>
                                 <br />
-                                <DeletePostButton />
+                                <DeletePostButton postId={post.id} />
                             </li>
                         ))}
                     </ul>
