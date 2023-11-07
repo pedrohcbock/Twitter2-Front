@@ -15,7 +15,7 @@ function UserProfile() {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [biography, setBiography] = useState('');
-    const [profile_pic, setProfile_pic] = useState(null);
+    const [profile_pic, setProfile_pic] = useState('');
 
     useEffect(() => {
         if (!localStorage.getItem("token")) {
