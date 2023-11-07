@@ -17,7 +17,7 @@ const AppRoutes = () => {
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/editprofile" element={<EditProfile />} />
       <Route path="/newpost" element={<CreatePost />} />
-      <Route path="/editpost" element={<EditPost />} />
+      <Route path="/editpost/:postId" element={<EditPost />} />
     </Routes>
   );
 };

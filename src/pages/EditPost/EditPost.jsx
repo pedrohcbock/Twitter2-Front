@@ -18,11 +18,16 @@ const EditPost = () => {
             navigate("/");
         }
 
-        api.get(`/post/${postId}`)
+        api.get(`post/postData/${postId}`)
             .then((response) => {
-                const post = response.data.post;
-                setTitle(post.title);
-                setContent(post.content);
+                const post = response.data.user;
+                if (post) {
+                    console.log(post)
+                    setTitle(post.title);
+                    setContent(post.content);
+                } else {
+                    setError("Post não encontrado.");
+                }
             })
             .catch((error) => {
                 console.error("Erro ao buscar os dados do post:", error);
@@ -44,7 +49,7 @@ const EditPost = () => {
         e.preventDefault();
 
         try {
-            await api.put(`/post/update/${postId}`, {
+            await api.post(`/post/update/${postId}`, {
                 title,
                 content,
             });
@@ -56,17 +61,18 @@ const EditPost = () => {
         }
     };
 
+    console.log(title)
     return (
         <div>
             <Header />
-            <div className="edit-post-container">
+            <div className="edit-profile-container">
                 <img
                     className="icon"
                     src="https://static-prod.adweek.com/wp-content/uploads/2022/11/FuzzyBlue2.jpg"
                     alt="Twitter Icon"
                 />
                 <h2>Editar Post</h2>
-                <form onSubmit={handleFormSubmit} className="edit-post-form">
+                <form onSubmit={handleFormSubmit} className="edit-profile-form">
                     <div className="form-group">
                         <label htmlFor="title">Título:</label>
                         <input
@@ -88,17 +94,13 @@ const EditPost = () => {
                             className="form-input"
                         />
                     </div>
-                    <button type="submit" className="create-button">
-                        Salvar
-                    </button>
-                    <Link to={"/profile"} className="cancel-link">
-                        Cancelar
-                    </Link>
+                    <button type="submit" className="update-button">Salvar</button>
+                    <Link to={"/profile"} className="cancel-link">Cancelar</Link>
                 </form>
                 {error && <p className="error-message">{error}</p>}
             </div>
         </div>
     );
-};
+}
 
 export default EditPost;

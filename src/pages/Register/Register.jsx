@@ -194,7 +194,7 @@ const Register = () => {
                     />
                 </div>
                 <button type="submit" className="login-button">Registrar</button>
-                <p>Já tem uma conta? <Link to="/login">Faça o login</Link></p>
+                <p>Já tem uma conta? <Link to="/">Faça o login</Link></p>
             </form>
             {error && <p className="error-message">{error}</p>}
         </div>

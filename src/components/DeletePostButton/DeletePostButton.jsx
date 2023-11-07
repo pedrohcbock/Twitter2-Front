@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import "./DeletePostButton.css";
 
-const DeletePostButton = () => {
+const DeletePostButton = ({ postId }) => {
     const navigate = useNavigate();
 
     const handleDeletePost = async () => {
         try {
-            await api.delete('/post/delete/{post}');
+            await api.delete(`/post/delete/${postId}`);
 
-            navigate('/feed');
+            navigate('/profile');
         } catch (error) {
             console.error('Erro ao excluir a postagem:', error);
         }
